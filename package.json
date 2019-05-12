@@ -1,0 +1,27 @@
+{
+  "name": "tezos-paychan",
+  "version": "0.1.0",
+  "description": "Payment channel client and smart contract for Tezos",
+  "main": "index.js",
+  "scripts": {
+    "test": "]"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kincaidoneil/tezos-paychan.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kincaidoneil/tezos-paychan/issues"
+  },
+  "homepage": "https://github.com/kincaidoneil/tezos-paychan#readme",
+  "dependencies": {
+    "base-n": "^1.0.0",
+    "big-integer": "^1.6.43",
+    "blakejs": "^1.1.0",
+    "bs58check": "^2.1.2",
+    "conseiljs": "^0.2.3",
+    "libsodium-wrappers": "^0.7.4"
+  }
+}

@@ -1,0 +1,43 @@
+type status =
+  | Open
+  | Closed;
+
+type action = (tez, signature);
+
+type storage = {
+  status,
+  signingKey: key,
+  sender: key,
+  recipient: key,
+  /* TODO Add channel timeout/dispute for sender */
+};
+
+let%init storage = (parameter: (key, key, key)) => {
+  status: Open,
+  signingKey: parameter[0],
+  sender: parameter[1],
+  recipient: parameter[2],
+};
+
+let%entry main = (action: action, storage) => {
+  let (value, signature) = action;
+  let bytes = Bytes.pack(value);
+
+  /* TODO Add replay protection/encode contract address in digest */
+
+  if (!Crypto.check(storage.signingKey, signature, bytes)) {
+    failwith("Invalid signature");
+  };
+
+  let senderTransfer =
+    Account.transfer(Crypto.hash_key(storage.sender), value);
+  let recipientTransfer =
+    Account.transfer(
+      Crypto.hash_key(storage.recipient),
+      Current.balance() - value,
+    );
+
+  /* TODO Close the channel */
+
+  ([senderTransfer, recipientTransfer], storage)
+};
